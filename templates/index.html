@@ -9,6 +9,10 @@
 	<link rel="stylesheet" type="text/css" href="static/css/my-login.css">
 </head>
 
+{#{% extends 'bootstrap/base.html' %}#}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+
 <body class="my-login-page">
 	<section class="h-100">
 		<div class="container h-100">
@@ -20,39 +24,57 @@
 					<div class="card fat">
 						<div class="card-body">
 							<h4 class="card-title">Welcome to Demo</h4>
-							<form method="POST" class="my-login-validation" novalidate="">
+
+{#                            {% block content %}#}
+
+{#                                <div class="row" style="margin-left: 20px">#}
+{#                                    <div class="col-md-10">#}
+{#                                        {{ wtf.form_field(form.username) }}#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            {% endblock %}#}
+
+							<form class="form form-horizontal"  role="form" method="POST" novalidate="">
+                                {{ form.hidden_tag() }}
 								<div class="form-group">
-									<label for="email">Username</label>
-									<input id="email" type="email" class="form-control" name="email" value="" required autofocus>
-									<div class="invalid-feedback">
-										Email is invalid
-									</div>
+                                    {{ wtf.form_field(form.username, placeholder='Please input your name') }}
+{#									<label for="email">Username</label>#}
+{#									<input id="email" type="email" class="form-control" name="email" value="" required autofocus>#}
+{#									<div class="invalid-feedback">#}
+{#										Email is invalid#}
+{#									</div>#}
 								</div>
 
 								<div class="form-group">
-									<label for="password">Password
-										<a href="forgot.html" class="float-right">
-											Forgot Password?
-										</a>
-									</label>
-									<input id="password" type="password" class="form-control" name="password" required data-eye>
-								    <div class="invalid-feedback">
-								    	Password is required
-							    	</div>
+{#									<label for="password">Password#}
+{#										<a href="forgot.html" class="float-right">#}
+{#											Forgot Password?#}
+{#										</a>#}
+{#									</label>#}
+                                    {{ wtf.form_field(form.password) }}
+{#									<input id="password" type="password" class="form-control" name="password" required data-eye>#}
+{#								    <div class="invalid-feedback">#}
+{#								    	Password is required#}
+{#							    	</div>#}
 								</div>
 
 								<div class="form-group">
-									<div class="custom-checkbox custom-control">
-										<input type="checkbox" name="remember" id="remember" class="custom-control-input">
-										<label for="remember" class="custom-control-label">Remember Me</label>
-									</div>
+                                    {{ wtf.form_field(form.remember_me,class="custom-control-input") }}
+{#									<div class="custom-checkbox custom-control">#}
+{#										<input type="checkbox" name="remember" id="remember" class="custom-control-input">#}
+{#										<label for="remember" class="custom-control-label">Remember Me</label>#}
+{#									</div>#}
 								</div>
 
 								<div class="form-group m-0">
-									<button type="submit" class="btn btn-primary btn-block">
-										Login
-									</button>
+                                    {{ wtf.form_field(form.submit,class='btn btn-primary btn-block',button_map={'submit_button': 'primary'}) }}
+{#									<button type="submit" class="btn btn-primary btn-block">#}
+{#										Login#}
+{#									</button>#}
 								</div>
+                                {% if error %}
+                                    <p class="error"><strong>Error:</strong> {{ error }}
+                                {% endif %}
 								<div class="mt-4 text-center">
 									Don't have an account? <a href="/register">Create</a>
 								</div>
